@@ -1,12 +1,13 @@
 <template>
   <section>
-    <input :value="value" @input="onInput" class="input" />
+    <input :value="value" @input="onInput" v-bind="$attrs" class="input" />
   </section>
 </template>
 
 <script>
 export default {
   name: "Input",
+  inheritAttrs: false, // 避免顶层容器继承属性
   props: {
     value: {
       type: String,
