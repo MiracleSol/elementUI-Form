@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper">
     <div class="input_wrap">
-      <label v-if="label" class="label" :style="{ width: labelWidth }">{{ label }}</label>
+      <label class="label" :style="{ width: labelWidth }">{{ label }}</label>
       <slot></slot>
     </div>
     <p v-if="errorMessage" class="error_msg" :style="{ paddingLeft: labelWidth }">
@@ -18,10 +18,6 @@ export default {
   inject: ["form"],
   props: {
     label: {
-      type: String,
-      default: ""
-    },
-    labelWidth: {
       type: String,
       default: ""
     },
@@ -52,6 +48,11 @@ export default {
           this.errorMessage = "";
         }
       });
+    }
+  },
+  computed: {
+    labelWidth() {
+      return this.form.labelWidth;
     }
   }
 };

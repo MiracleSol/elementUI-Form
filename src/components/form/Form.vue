@@ -19,7 +19,11 @@ export default {
     },
     rules: {
       type: Object
-    }
+    },
+    labelWidth: {
+      type: String,
+      default: ""
+    },
   },
   data() {
     return {};

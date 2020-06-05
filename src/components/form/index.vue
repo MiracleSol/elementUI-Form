@@ -1,14 +1,17 @@
 <template>
   <section class="form">
-    <Form :model="model" :rules="rules" ref="loginForm">
-      <form-item label="用户名：" prop="username" label-width="70px">
+    <Form :model="model" :rules="rules" ref="loginForm" label-width="70px">
+      <form-item label="用户名：" prop="username">
         <Input v-model="model.username" />
       </form-item>
-      <form-item label="密码：" prop="password" label-width="70px">
+      <form-item label="密码：" prop="password">
         <Input v-model="model.password" type="password" />
       </form-item>
+      <form-item label="记住密码：">
+        <CheckBox v-model="model.remember"></CheckBox>
+      </form-item>
       <form-item>
-        <button @click="onLogin">登录</button>
+        <button class="btn" @click="onLogin">登录</button>
       </form-item>
     </Form>
   </section>
@@ -16,8 +19,11 @@
 
 <script>
 import Input from "./Input.vue";
+import CheckBox from "./CheckBox.vue";
 import FormItem from "./FormItem.vue";
 import Form from "./Form.vue";
+import Notice from "@/components/Notice";
+import create from "@/utils/create.js";
 
 export default {
   name: "index",
@@ -43,7 +49,8 @@ export default {
     return {
       model: {
         username: "",
-        password: ""
+        password: "",
+        remember: false
       },
       rules: {
         username: [{ required: true, validator: validateUsername }],
@@ -54,16 +61,17 @@ export default {
   methods: {
     onLogin() {
       this.$refs.loginForm.validate(isValid => {
-        if (isValid) {
-          alert("success");
-        } else {
-          alert("failed");
-        }
+        create(Notice, {
+          title: "提示信息",
+          message: isValid ? "登录成功" : "登录失败",
+          duration: 1500
+        }).show();
       });
     }
   },
   components: {
     Input,
+    CheckBox,
     FormItem,
     Form
   }
@@ -76,5 +84,17 @@ export default {
   border-radius: 5px;
   padding: 20px 15px;
   margin: 10px;
+}
+.btn {
+  padding: 5px 23px;
+  border-radius: 10px;
+  background-color: #409eff;
+  border: 1px solid #409eff;
+  color: #ffffff;
+  font-size: 14px;
+  &:hover {
+    background-color: #0d80f3;
+    border-color: #0d80f3;
+  }
 }
 </style>
